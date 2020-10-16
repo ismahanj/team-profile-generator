@@ -1,0 +1,23 @@
+{
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "# Description      Team profile generator creates a webpage of a workplace team to that lists managers, engineers, and interns through user input. the profiles includes employee name, id, email, github user name, and role.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ismahanj/team-profile-generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ismahanj/team-profile-generator/issues"
+  },
+  "homepage": "https://github.com/ismahanj/team-profile-generator#readme",
+  "dependencies": {
+    "inquirer": "^7.3.3"
+  }
+}
