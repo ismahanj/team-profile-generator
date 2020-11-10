@@ -20,7 +20,7 @@ const teamArray = []
 function createTeam() {
     inquirer.prompt({
         type: "list",
-        name: "choice",
+        name: "choices",
         message: "What is the role of this employee?",
         choices: ["Manager", "Engineer", "Intern"]
     }).then(function ({ choices }) {
@@ -28,7 +28,7 @@ function createTeam() {
             switch (choices) {
                 case "Manager":
                     createManager(); 
-                 
+                
                     break; 
 
                  case "Engineer":
@@ -154,7 +154,6 @@ function createTeam() {
     }
 
     // restart the choices
-    createTeam(); 
-      
+    createTeam();     
 
 
