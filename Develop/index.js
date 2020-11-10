@@ -18,12 +18,12 @@ const teamArray = []
 
 // Write code to use inquirer to gather information about the development team members,
 function createTeam() {
-    inquirer.prompt({
+    inquirer.prompt([{
         type: "list",
         name: "choices",
         message: "What is the role of this employee?",
-        choices: ["Manager", "Engineer", "Intern"]
-    }).then(function ({ choices }) {
+        choices: ["Manager", "Engineer", "Intern", "Done"]
+    }]).then(function ({ choices }) {
 // and to create objects for each team member (using the correct classes as blueprints!)
             switch (choices) {
                 case "Manager":
@@ -40,6 +40,7 @@ function createTeam() {
                     break; 
 
                 default:
+                    
                         console.log("thanks for building your team!")
                         // function for building team into team.html
                         myTeam(); 
