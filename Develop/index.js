@@ -12,6 +12,9 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 const Choices = require("inquirer/lib/objects/choices");
 
+// empty array of team members
+const teamArray = []
+
 
 // Write code to use inquirer to gather information about the development team members,
 function createTeam() {
@@ -20,9 +23,9 @@ function createTeam() {
         name: "choice",
         message: "What is the role of this employee?",
         choices: ["Manager", "Engineer", "Intern"]
-    }).then(function ({ choice }) {
+    }).then(function ({ choices }) {
 // and to create objects for each team member (using the correct classes as blueprints!)
-            switch (choice) {
+            switch (choices) {
                 case "Manager":
                     createManager(); 
                  
@@ -38,55 +41,120 @@ function createTeam() {
 
                 default:
                         console.log("thanks for building your team!")
+                        // function for building team into team.html
+                        myTeam(); 
                         break;
                 }
             })
         }          
 
         function createManager() {
-            console.log('Manager function');
-            inquirer.prompt({
-                type: "input",
-                message: 'what is your name',
-                name: "managerName"
-            }).then(function ({ managerName }) {
-                const myTeam = new manager(managerName);
-                manager.push(myTeam);
-                console.log(manager);
+           //questions for manager
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'managerName',
+                    message: 'enter the name of the manager'
+                },
+                {
+                    type: 'input',
+                    name: 'managerID',
+                    message: 'enter the id of the manager'
+                },
+                {
+                    type: 'input',
+                    name: 'managerEmail',
+                    message: 'enter the email address of the manager'
+                },
+                {
+                    type: 'input',
+                    name: 'office',
+                    message: 'enter the office number of the manager'
+                }
+            ]).then((response) => {
+                const { managerName, managerID, managerEmail, office } = response;
+                // create a new manager object/instance
+                const manager = new Manager(managerName, managerID, managerEmail, office);
+                teamArray.push(manager);
                 createTeam();
             })
         }
 
-       
+    function createEngineer(){
+
+//questions for engineer
+        inquirer.prompt([
+            {
+                type: 'input',
+                name: 'engineerName',
+                message: 'Enter the name of this engineer'
+            },
+            {
+                type: 'input',
+                name: 'engineerID',
+                message: 'Enter the ID of this engineer'
+            },
+            {
+                type: 'input',
+                name: 'engineerEmail',
+                message: 'Enter the email address of this engineer'
+            },
+            {
+                type: 'input',
+                name: 'github',
+                message: 'Enter the github address of this engineer'
+            }
+        ]).then((response) => {
+            const { engineerName, engineerID, engineerEmail, github } = response;
+            //create a new instance of an engineer
+            const engineer = new Engineer(engineerName, engineerID, engineerEmail, github);
+            teamArray.push(engineer);
+            createTeam(); 
+        })
+    }
+
+    function createIntern (){
+        inquirer.prompt([
+            {
+                type: 'input',
+                name: 'internName',
+                message: 'Enter the name of the intern'
+            },
+            {
+                type: 'input',
+                name: 'internID',
+                message: 'Enter the ID of the intern'
+            },
+            {
+                type: 'input',
+                name: 'internEmail',
+                message: 'Enter the email address of the intern'
+            },
+            {
+                type: 'input',
+                name: 'school',
+                message: 'Enter the school of the intern'
+            }
+
+        ]).then((response) =>{
+            const { internName, internID, internEmail, school } = response;
+            // create a new instance of an intern
+            const intern = new Intern(internName, internID, internEmail, school);
+            teamArray.push(intern);
+            createTeam();
+        })
+    }
+
+    function myTeam() {
+        fs.writeFile(outputPath, render(teamArray), (err) => {
+            if (err) {
+                return console.log('ERR', err);
+            }
+        })
+    }
+
+    // restart the choices
+    createTeam(); 
       
 
-       
 
-
-// .then(fs.writeFile("team.html", teams, function(err){
-// if(err){
-//     throw err
-// }
-// }))
-
-
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
